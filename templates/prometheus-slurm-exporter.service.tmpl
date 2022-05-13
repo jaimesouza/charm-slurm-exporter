@@ -1,0 +1,15 @@
+[Unit]
+Description=Prometheus Slurm Exporter
+After=network.target
+
+[Service]
+Type=simple
+User={{ username }}
+Group={{ groupname }}
+EnvironmentFile=-{{ environment_file }}
+ExecStart={{ binary_path }} $OPTIONS
+Restart=always
+RestartSec=15
+
+[Install]
+WantedBy=multi-user.target

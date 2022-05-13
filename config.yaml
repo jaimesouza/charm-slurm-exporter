@@ -1,0 +1,9 @@
+options:
+  listen-address:
+    type: string
+    default: "0.0.0.0:9120"
+    description: The address to listen to.
+  gpu-accounting:
+    type: boolean
+    default: False
+    description: Whether to enable GPU Accounting.

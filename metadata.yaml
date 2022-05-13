@@ -1,0 +1,28 @@
+name: slurm-exporter
+summary: >
+    Export Slurm metrics to Prometheus.
+
+maintainers:
+    - OmniVector Solutions <admin@omnivector.solutions>
+    - Heitor de Bittencourt <heitor.bittencourt@omnivector.solutions>
+
+description: >
+    Deploys https://github.com/vpenso/prometheus-slurm-exporter
+
+subordinate: true
+
+requires:
+  juju-info:
+    interface: juju-info
+    scope: container
+
+provides:
+  prometheus:
+    interface: prometheus
+
+resources:
+  slurm-exporter:
+    type: file
+    filename: slurm-exporter.tar.gz
+    description: >
+      Tarball containing the slurm-exporter binary.
