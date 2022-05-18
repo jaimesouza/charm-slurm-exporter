@@ -56,8 +56,11 @@ class SlurmExporterOps:
         self._systemctl("disable")
 
         logger.debug("## Uninstalling slurm-exporter")
-        self._binary_path.unlink()
-        shutil.rmtree(self._varlib_path)
+        try:
+            self._binary_path.unlink()
+            shutil.rmtree(self._varlib_path)
+        except FileNotFoundError:
+            logger.trace("## Files already removed")
 
         # remove user and group
         subprocess.call(["userdel", self._slurm_exporter_user])
@@ -105,7 +108,7 @@ class SlurmExporterOps:
 
         template_file = self._template_dir / f"{self._systemd_service}.tmpl"
         template = template_file.read_text()
-        Path(f"/etc/systemd/system/{self._systemd_service}").write_text(template.render(**ctxt))
+        Path(f"/etc/systemd/system/{self._systemd_service}").write_text(template.format(**ctxt))
 
         self._systemctl("daemon-reload")
         self._systemctl("enable")
