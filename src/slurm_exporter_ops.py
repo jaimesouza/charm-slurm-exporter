@@ -11,8 +11,6 @@ import tarfile
 from tempfile import TemporaryDirectory
 from pathlib import Path
 
-from jinja2 import Environment, FileSystemLoader
-
 logger = logging.getLogger(__name__)
 
 
@@ -26,7 +24,7 @@ class SlurmExporterOps:
         self._systemd_service = "prometheus-slurm-exporter.service"
         self._environment_file = Path("/etc/default/prometheus-slurm-exporter")
 
-        self._binary_path = Path("/usr/bin") / "prometheus-slurm-exporter"
+        self._binary_path = Path("/usr/bin/prometheus-slurm-exporter")
         self._varlib_path = Path("/var/lib/slurm_exporter")
         self._slurm_exporter_user = "prometheus_slurm_exporter"
         self._slurm_exporter_group = "prometheus_slurm_exporter"
@@ -73,9 +71,10 @@ class SlurmExporterOps:
     def configure(self, params: dict):
         """Configure slurm-exporter and restart service."""
         logger.debug(f"## Writing {self._environment_file} with {params}")
-        environment = Environment(loader=FileSystemLoader(self._template_dir))
-        template = environment.get_template("prometheus-slurm-exporter.tmpl")
-        self._environment_file.write_text(template.render(params))
+
+        template_file = self._template_dir / "prometheus-slurm-exporter.tmpl"
+        template = template_file.read_text()
+        self._environment_file.write_text(template.format(**params))
 
         self._systemctl("restart")
 
@@ -104,9 +103,9 @@ class SlurmExporterOps:
         ctxt["username"] = self._slurm_exporter_user
         ctxt["groupname"] = self._slurm_exporter_group
 
-        environment = Environment(loader=FileSystemLoader(self._template_dir))
-        template = environment.get_template(self._systemd_service + ".tmpl")
-        Path(f"/etc/systemd/system/{self._systemd_service}").write_text(template.render(ctxt))
+        template_file = self._template_dir / f"{self._systemd_service}.tmpl"
+        template = template_file.read_text()
+        Path(f"/etc/systemd/system/{self._systemd_service}").write_text(template.render(**ctxt))
 
         self._systemctl("daemon-reload")
         self._systemctl("enable")

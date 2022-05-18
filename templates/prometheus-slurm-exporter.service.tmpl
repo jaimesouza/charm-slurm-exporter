@@ -4,10 +4,10 @@ After=network.target
 
 [Service]
 Type=simple
-User={{ username }}
-Group={{ groupname }}
-EnvironmentFile=-{{ environment_file }}
-ExecStart={{ binary_path }} $OPTIONS
+User={username}
+Group={groupname}
+EnvironmentFile=-{environment_file}
+ExecStart={binary_path} $OPTIONS
 Restart=always
 RestartSec=15
 
