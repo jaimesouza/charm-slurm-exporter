@@ -60,7 +60,7 @@ class SlurmExporterOps:
             self._binary_path.unlink()
             shutil.rmtree(self._varlib_path)
         except FileNotFoundError:
-            logger.trace("## Files already removed")
+            logger.debug("## Files already removed")
 
         # remove user and group
         subprocess.call(["userdel", self._slurm_exporter_user])
