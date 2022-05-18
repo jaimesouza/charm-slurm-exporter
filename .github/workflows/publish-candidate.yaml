@@ -1,8 +1,9 @@
 name: PublishCharms
 
 on:
-  pull_request:
-    types: [closed]
+  push:
+    tags:
+      - "*"
 
 jobs:
   build-charms:
@@ -32,10 +33,10 @@ jobs:
         run: |
           charmcraft pack
 
-      - name: "Upload to edge"
+      - name: "Upload to edge and candidate"
         env:
           CHARMCRAFT_AUTH: ${{ secrets.CHARMCRAFT_AUTH }}
         run: |
           extension="_ubuntu-20.04-amd64_centos-7-amd64.charm"
 
-          charmcraft upload --release=edge slurm-exporter$extension --resource slurm-exporter:1
+          charmcraft upload --release=edge --release=candidate slurm-exporter$extension --resource slurm-exporter:1
