@@ -25,10 +25,16 @@ visualization of the information exposed via this charm.
 
 ## Developing
 
-We supply a `Makefile` with a target to build the charm:
+We supply a `Makefile` with a target to build the charm and the resources
+needed:
 
 ```bash
 $ make charm
+```
+
+Once you have built the charm, use Juju to deploy it:
+
+```bash
 $ juju deploy ./slurm-exporter_ubuntu-20.04-amd64_centos-7-amd64.charm --resource slurm-exporter=./slurm-exporter.tar.gz
 ```
 
