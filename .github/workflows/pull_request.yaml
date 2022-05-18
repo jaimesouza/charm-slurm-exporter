@@ -15,7 +15,6 @@ jobs:
             - name: "Install tox"
               run: |
                   pip install tox
-
             - name: "lint the charms"
               run: |
                   make lint
@@ -47,6 +46,6 @@ jobs:
               shell: bash
               run: |
                   make version
-                  charmcraft pack
+                  sg lxd -c "charmcraft pack"
 
                   echo "charm version: $(cat version)"
