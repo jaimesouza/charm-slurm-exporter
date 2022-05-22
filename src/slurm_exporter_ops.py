@@ -67,7 +67,7 @@ class SlurmExporterOps:
         subprocess.call(["groupdel", self._slurm_exporter_group])
 
         # remove systemd files
-        self._systemd_service.unlink()
+        Path(f"/etc/systemd/system/{self._systemd_service}").unlink()
         self._environment_file.unlink()
         self._systemctl("daemon-reload")
 
