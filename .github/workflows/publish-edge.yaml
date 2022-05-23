@@ -30,7 +30,7 @@ jobs:
       - name: "Build the charms"
         shell: bash
         run: |
-          charmcraft pack
+          sg lxd -c "charmcraft pack"
 
       - name: "Upload to edge"
         env:
