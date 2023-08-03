@@ -45,7 +45,7 @@ jobs:
             - name: "Build the charms"
               shell: bash
               run: |
-                  make version
+                  echo "test" > version
                   charmcreaft clean
                   charmcraft pack
 
