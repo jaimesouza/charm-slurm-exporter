@@ -17,7 +17,8 @@ jobs:
               run: |
                   sudo adduser $USER lxd
                   newgrp lxd        
-                  sudo lxd init --auto
+                  #sudo lxd init --auto
+                  sudo lxd init --minimal
                   sudo lxc network set lxdbr0 ipv6.address none        
                   sudo chmod a+wr /var/snap/lxd/common/lxd/unix.socket
                   lxc launch ubuntu:22.04
