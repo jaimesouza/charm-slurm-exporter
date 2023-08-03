@@ -15,16 +15,16 @@ jobs:
                   sudo snap install charmcraft --channel=latest/stable --classic            
             - name: "Configure lxd"
               run: |
-                  sudo adduser $USER lxd
-                  newgrp lxd        
+                  #sudo adduser $USER lxd
+                  #newgrp lxd        
                   #sudo lxd init --auto
                   sudo lxd init --minimal
-                  sudo lxc network set lxdbr0 ipv6.address none        
-                  sudo chmod a+wr /var/snap/lxd/common/lxd/unix.socket
-                  lxc launch ubuntu:22.04
+                  #sudo lxc network set lxdbr0 ipv6.address none        
+                  #sudo chmod a+wr /var/snap/lxd/common/lxd/unix.socket
+                  #lxc launch ubuntu:22.04
             - name: "Build the charms"
               shell: bash
-              run: |
+              run: |                  
                   echo "test" > version
                   charmcraft clean
                   charmcraft pack
